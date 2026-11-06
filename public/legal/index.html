@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms &amp; Privacy | Arcle FX</title>
+  <link rel="icon" type="image/png" href="/center-logo.png" />
+  <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       #070a11;
+      --border:   rgba(255,255,255,0.08);
+      --border-h: rgba(255,255,255,0.15);
+      --text:     #eef1f8;
+      --muted:    #8a93a8;
+      --teal:     #00e1ff;
+      --purple:   #7c5cff;
+    }
+
+    html { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+    .bg-grid {
+      position: fixed; inset: 0; z-index: -2;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 10%, transparent 75%);
+    }
+    .ambient { position: fixed; border-radius: 50%; filter: blur(90px); z-index: -1; mix-blend-mode: screen; }
+    .a-teal   { width: 42vw; height: 42vw; background: radial-gradient(circle, rgba(0,225,255,0.4), transparent 60%); top: -6%; left: 6%; opacity: .4; }
+    .a-purple { width: 38vw; height: 38vw; background: radial-gradient(circle, rgba(124,92,255,0.5), transparent 60%); top: -14%; left: 40%; opacity: .4; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; inset-x: 0; z-index: 100; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; padding: 0 32px;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background .35s, border-color .35s, backdrop-filter .35s;
+    }
+    nav.scrolled {
+      border-bottom-color: transparent;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--text);
+      text-decoration: none; flex-shrink: 0;
+    }
+    .nav-logo { width: 30px; height: 30px; border-radius: 8px; object-fit: cover; }
+
+    /* .nav-back always renders as a visible pill — no transparency on scroll */
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 36px; padding: 0 16px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: transparent;
+      color: var(--text); font-size: 0.875rem; font-weight: 600;
+      text-decoration: none;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .nav-back:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.35);
+      color: #fff;
+    }
+
+    /* ── Page ── */
+    .page-wrap {
+      max-width: 760px; margin: 0 auto;
+      padding: 100px 24px 100px;
+      text-align: center;
+    }
+    .page-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.76rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
+    }
+    .page-kicker::before { content: ''; width: 18px; height: 1px; background: currentColor; }
+    .page-wrap h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 700; letter-spacing: -.04em; line-height: 1.08;
+      color: var(--text); margin-bottom: 14px;
+    }
+    .page-wrap > p {
+      color: var(--muted); font-size: 1rem; line-height: 1.65; margin-bottom: 40px;
+    }
+
+    /* ── Tabs ── */
+    .tab-row {
+      display: flex; gap: 8px; justify-content: center; margin-bottom: 48px;
+      scroll-margin-top: 80px;
+    }
+    .tab-btn {
+      height: 40px; padding: 0 22px; border-radius: 999px;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted); font-family: inherit;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .tab-btn.active {
+      background: rgba(0,225,255,0.1);
+      border-color: rgba(0,225,255,0.35);
+      color: var(--teal);
+    }
+    .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.07); color: var(--text); }
+
+    /* Grid stack — both sections share the same area so layout height stays constant */
+    .sections-wrap { display: grid; grid-template-areas: "slot"; }
+    .legal-section {
+      grid-area: slot;
+      visibility: hidden; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .legal-section.active {
+      visibility: visible; opacity: 1; pointer-events: auto;
+    }
+
+    /* ── Coming Card ── */
+    .coming-card {
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 24px; padding: 64px 40px;
+      text-align: center; background: rgba(255,255,255,0.02);
+    }
+    .coming-icon {
+      width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 24px;
+      background: linear-gradient(120deg, rgba(0,225,255,.12), rgba(124,92,255,.12) 55%, rgba(255,78,205,.12));
+      border: 1px solid rgba(255,255,255,0.1);
+      display: grid; place-items: center; font-size: 2rem; color: var(--teal);
+    }
+    .coming-card h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.55rem; font-weight: 700; letter-spacing: -.03em;
+      color: var(--text); margin-bottom: 12px;
+    }
+    .coming-card p {
+      color: var(--muted); font-size: 0.97rem; line-height: 1.7;
+      max-width: 440px; margin: 0 auto 20px;
+    }
+    .coming-note {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 32px; padding: 0 16px; border-radius: 999px;
+      border: 1px solid rgba(0,225,255,0.2);
+      background: rgba(0,225,255,0.05);
+      color: var(--teal); font-size: 0.82rem; font-weight: 600;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+      color: var(--muted); font-size: 0.82rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--text); }
+    .footer-links { display: flex; align-items: center; gap: 0; }
+    .footer-links a { padding: 0 14px; }
+    .footer-links a + a { border-left: 1px solid rgba(255,255,255,0.1); }
+
+    @media (max-width: 540px) {
+      nav { padding: 0 16px; }
+      .page-wrap { padding: 90px 16px 80px; }
+      .coming-card { padding: 40px 20px; }
+      footer { flex-direction: column; text-align: center; padding: 24px 16px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .footer-links a + a { border-left: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="ambient a-teal"></div>
+  <div class="ambient a-purple"></div>
+
+  <nav>
+    <a href="/" class="nav-brand">
+      <img src="/center-logo.png" alt="Arcle FX" class="nav-logo" />
+      Arcle FX
+    </a>
+    <a href="/" class="nav-back">
+      <i class="ph ph-arrow-left"></i> Back to App
+    </a>
+  </nav>
+
+  <div class="page-wrap">
+    <div class="page-kicker">Legal</div>
+    <h1>Terms &amp; Privacy</h1>
+    <p>Legal documents for the Arcle FX protocol. These will be published shortly.</p>
+
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('tab-terms', this)">Terms of Service</button>
+      <button class="tab-btn"        onclick="switchTab('tab-privacy', this)">Privacy Policy</button>
+    </div>
+
+    <div class="sections-wrap">
+      <div id="tab-terms" class="legal-section active">
+        <div class="coming-card">
+          <div class="coming-icon"><i class="ph ph-file-text"></i></div>
+          <h2>Terms of Service</h2>
+          <p>Our Terms of Service are being finalized. They will cover protocol usage, fee structure, risk disclosures, and user responsibilities.</p>
+          <div class="coming-note"><i class="ph ph-clock"></i> Coming soon</div>
+        </div>
+      </div>
+
+      <div id="tab-privacy" class="legal-section">
+        <div class="coming-card">
+          <div class="coming-icon"><i class="ph ph-shield-check"></i></div>
+          <h2>Privacy Policy</h2>
+          <p>Our Privacy Policy is being finalized. As a non-custodial protocol, we collect minimal information — no private keys, no identity data.</p>
+          <div class="coming-note"><i class="ph ph-clock"></i> Coming soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Arcle FX</span>
+    <div class="footer-links">
+      <a href="https://docs.arclefx.com/" target="_blank" rel="noopener noreferrer">Docs</a>
+      <a href="/blog">Blog</a>
+      <a href="/legal?tab=terms">Terms</a>
+      <a href="/legal?tab=privacy">Privacy</a>
+    </div>
+  </footer>
+
+  <script>
+    /* Apply frosted-glass effect to nav on scroll */
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    /*
+     * Scroll to the tab row so the card is immediately visible.
+     * Double rAF guarantees the browser has committed layout before measuring.
+     */
+    function scrollToContent() {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const el = document.querySelector('.tab-row');
+          if (!el) return;
+          const offset = 80; // nav height + breathing room
+          const top = el.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        });
+      });
+    }
+
+    /* Switch active tab and scroll to the content area */
+    function switchTab(id, btn) {
+      document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+      scrollToContent();
+    }
+
+    /* Activate the Privacy tab (called when the page is opened via ?tab=privacy) */
+    function activatePrivacy() {
+      document.getElementById('tab-terms').classList.remove('active');
+      document.getElementById('tab-privacy').classList.add('active');
+      document.querySelectorAll('.tab-btn')[0].classList.remove('active');
+      document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    }
+
+    /* Resolve which tab to activate based on URL params / sessionStorage / hash */
+    const params = new URLSearchParams(window.location.search);
+    const isPrivacy = params.get('tab') === 'privacy'
+      || sessionStorage.getItem('openPrivacy') === '1'
+      || window.location.hash === '#privacy';
+
+    if (isPrivacy) {
+      sessionStorage.removeItem('openPrivacy');
+      activatePrivacy();
+    }
+
+    /*
+     * Trigger scroll after the DOM is ready AND after the first paint.
+     * Double rAF ensures the browser has committed layout before we measure.
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scrollToContent();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
