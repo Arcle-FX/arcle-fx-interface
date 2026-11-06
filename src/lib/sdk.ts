@@ -12,6 +12,7 @@ import { createPublicClient, http, formatUnits, custom, encodeFunctionData, pars
 import { arbitrum, base, mainnet } from 'viem/chains';
 import { NETWORKS, TOKEN_ADDRESSES, ADD_CHAIN_PARAMS, OFFICIAL_RPC, FALLBACK_RPC } from '../config/constants';
 import { clearSmartAccountClient } from './gasless';
+import { BASE_BUILDER_SUFFIX } from './attribution';
 import type { UnifiedBalance } from '../types';
 
 // ── Validation ──────────────────────────────────────────────
@@ -241,10 +242,17 @@ function wrapProviderWithAutoAdd(provider: any): any {
               const finalPriority = existingPriority > PRIORITY_FEE
                 ? existingPriority : PRIORITY_FEE;
 
-              const patchedTx = {
+              // Base Builder Code (ERC-8021): append attribution suffix to Base txs.
+              // Contracts ignore the extra bytes; Base's offchain indexer reads it.
+              const builderData = activeChainIdNum === 8453
+                ? ((tx.data ?? '0x') + BASE_BUILDER_SUFFIX.slice(2)) as `0x${string}`
+                : tx.data;
+
+              const patchedTx: Record<string, string | undefined> = {
                 ...tx,
                 maxFeePerGas:         `0x${finalMaxFee.toString(16)}`,
                 maxPriorityFeePerGas: `0x${finalPriority.toString(16)}`,
+                ...(builderData !== undefined ? { data: builderData } : {}),
               };
               return originalRequest({ ...args, params: [patchedTx, ...args.params.slice(1)] });
             }
