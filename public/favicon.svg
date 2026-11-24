@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <!-- Matches the HTML: linear-gradient(135deg, #2dd4bf, #8b5cf6) -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <clipPath id="rnd">
+      <rect width="100" height="100" rx="27" ry="27"/>
+    </clipPath>
+  </defs>
+
+  <!-- Rounded square background — border-radius: 110/400 ≈ 27% -->
+  <rect width="100" height="100" rx="27" fill="url(#bg)"/>
+
+  <!-- ph-intersect icon (bold), white, centered, ~60% of card size -->
+  <g clip-path="url(#rnd)" transform="translate(20, 20) scale(0.234375)" fill="white">
+    <path d="M178,78A84,84,0,1,0,78,178,84,84,0,1,0,178,78Zm-22.19,22.19a59.57,59.57,0,0,1-9.81,28.9L126.94,110A59.57,59.57,0,0,1,155.84,100.16Zm-79.5,52.51a60,60,0,1,1,76.33-76.33A84.11,84.11,0,0,0,76.34,152.67Zm23.82,3.17a59.57,59.57,0,0,1,9.81-28.9L129.06,146A59.57,59.57,0,0,1,100.16,155.84ZM160,220a60.09,60.09,0,0,1-56.67-40.34,84.11,84.11,0,0,0,76.33-76.33A60,60,0,0,1,160,220Z"/>
+  </g>
+</svg>

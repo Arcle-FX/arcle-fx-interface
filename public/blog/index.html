@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | Arcle FX</title>
+  <link rel="icon" type="image/png" href="/center-logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #070a11;
+      --surface:   rgba(18, 24, 39, 0.65);
+      --border:    rgba(255, 255, 255, 0.08);
+      --border-h:  rgba(255, 255, 255, 0.15);
+      --text:      #eef1f8;
+      --muted:     #8a93a8;
+      --teal:      #00e1ff;
+      --purple:    #7c5cff;
+      --pink:      #ff4ecd;
+    }
+
+    html { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+    /* ── Background ── */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: -2;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 10%, transparent 75%);
+    }
+    .ambient { position: fixed; border-radius: 50%; filter: blur(90px); z-index: -1; mix-blend-mode: screen; }
+    .a-teal   { width: 42vw; height: 42vw; background: radial-gradient(circle, rgba(0,225,255,0.4), transparent 60%); top: -6%; left: 6%; opacity: .4; }
+    .a-purple { width: 38vw; height: 38vw; background: radial-gradient(circle, rgba(124,92,255,0.5), transparent 60%); top: -14%; left: 40%; opacity: .4; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; inset-x: 0; z-index: 100; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; padding: 0 32px;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background .35s, border-color .35s, backdrop-filter .35s;
+    }
+    nav.scrolled {
+      border-bottom-color: transparent;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--text);
+      text-decoration: none; flex-shrink: 0;
+    }
+    .nav-logo { width: 30px; height: 30px; border-radius: 8px; object-fit: cover; }
+
+    /* .nav-back always renders as a visible pill — no transparency on scroll */
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 36px; padding: 0 16px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: transparent;
+      color: var(--text); font-size: 0.875rem; font-weight: 600;
+      text-decoration: none;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .nav-back:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.35);
+      color: #fff;
+    }
+
+    /* ── Hero ── */
+    .blog-hero {
+      max-width: 760px; margin: 0 auto;
+      padding: 120px 24px 64px;
+      text-align: center;
+    }
+    .blog-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.76rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
+    }
+    .blog-kicker::before { content: ''; width: 18px; height: 1px; background: currentColor; }
+    .blog-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 700; letter-spacing: -.04em; line-height: 1.05;
+      color: var(--text); margin-bottom: 18px;
+    }
+    .blog-hero p { color: var(--muted); font-size: 1.08rem; line-height: 1.65; }
+
+    /* ── Coming Soon Card ── */
+    .blog-wrap { max-width: 760px; margin: 0 auto; padding: 0 24px 100px; }
+    .coming-card {
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 64px 40px 48px;
+      text-align: center;
+      background: rgba(255,255,255,0.02);
+    }
+    .coming-icon {
+      width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 24px;
+      background: linear-gradient(120deg, rgba(0,225,255,.12), rgba(124,92,255,.12) 55%, rgba(255,78,205,.12));
+      border: 1px solid rgba(255,255,255,0.1);
+      display: grid; place-items: center; font-size: 2rem; color: var(--teal);
+    }
+    .coming-card h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem; font-weight: 700; letter-spacing: -.03em;
+      color: var(--text); margin-bottom: 12px;
+    }
+    .coming-card > p {
+      color: var(--muted); font-size: 0.98rem; line-height: 1.65;
+      max-width: 440px; margin: 0 auto 32px;
+    }
+    .notify-form {
+      display: flex; gap: 10px; max-width: 400px; margin: 0 auto;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .notify-form input {
+      flex: 1; min-width: 200px; height: 48px; padding: 0 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--text); font-size: 0.9rem; font-family: inherit;
+      outline: none; transition: border-color .2s;
+    }
+    .notify-form input::placeholder { color: var(--muted); }
+    .notify-form input:focus { border-color: rgba(0,225,255,0.4); }
+    .notify-btn {
+      height: 48px; padding: 0 24px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      color: #070a11; font-weight: 700; font-size: 0.9rem;
+      border: none; cursor: pointer; font-family: inherit;
+      transition: opacity .2s, transform .15s;
+      white-space: nowrap;
+    }
+    .notify-btn:hover { opacity: .88; transform: scale(1.03); }
+    .notify-btn.subscribed {
+      background: linear-gradient(135deg, #00e1a0, #00c4b4);
+      cursor: default; transform: none !important; opacity: 1 !important;
+    }
+    .notify-success {
+      width: 100%; text-align: center;
+      margin-top: 10px; font-size: 0.83rem;
+      color: var(--teal);
+      display: none;
+      align-items: center; justify-content: center; gap: 6px;
+    }
+    .notify-success.visible { display: flex; }
+
+    /* ── Topics (inside the card, at the bottom) ── */
+    .topics-divider {
+      width: 100%; height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin: 44px 0 36px;
+    }
+    .topics-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .topic-pills {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center;
+    }
+    .topic-pill {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 36px; padding: 0 18px; border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted); font-size: 0.875rem; font-weight: 600;
+      line-height: 1;
+      cursor: default; transition: border-color .2s, color .2s;
+    }
+    .topic-pill:hover { border-color: var(--border-h); color: var(--text); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+      color: var(--muted); font-size: 0.82rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--text); }
+    .footer-links { display: flex; align-items: center; gap: 0; }
+    .footer-links a { padding: 0 14px; }
+    .footer-links a + a { border-left: 1px solid rgba(255,255,255,0.1); }
+
+    @media (max-width: 540px) {
+      nav { padding: 0 16px; }
+      .blog-hero { padding: 100px 16px 48px; }
+      .blog-wrap { padding-left: 16px; padding-right: 16px; }
+      .coming-card { padding: 40px 20px 32px; }
+      footer { flex-direction: column; text-align: center; padding: 24px 16px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .footer-links a + a { border-left: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="ambient a-teal"></div>
+  <div class="ambient a-purple"></div>
+
+  <nav>
+    <a href="/" class="nav-brand">
+      <img src="/center-logo.png" alt="Arcle FX" class="nav-logo" />
+      Arcle FX
+    </a>
+    <a href="/" class="nav-back">
+      <i class="ph ph-arrow-left"></i> Back to App
+    </a>
+  </nav>
+
+  <div class="blog-hero">
+    <div class="blog-kicker">Blog</div>
+    <h1>Updates from<br/>Arcle FX</h1>
+    <p>Protocol updates, ecosystem insights, and builder stories from the Arcle FX team.</p>
+  </div>
+
+  <div class="blog-wrap">
+    <div class="coming-card">
+      <div class="coming-icon">
+        <i class="ph ph-newspaper"></i>
+      </div>
+      <h2>Posts Coming Soon</h2>
+      <p>We're working on launch articles, protocol deep-dives, and ecosystem updates. Subscribe to get notified when we publish.</p>
+      <form class="notify-form" onsubmit="handleSubmit(event)">
+        <input
+          id="notify-email"
+          type="email"
+          placeholder="you@email.com"
+          autocomplete="email"
+          required
+        />
+        <button class="notify-btn" id="notify-btn" type="submit">Notify me</button>
+      </form>
+      <div class="notify-success" id="notify-success">
+        <i class="ph ph-check-circle"></i> You're on the list! We'll notify you when we publish.
+      </div>
+
+      <!-- Divider line + Upcoming Topics pills, inside the card at the bottom -->
+      <div class="topics-divider"></div>
+      <div class="topics-title">Upcoming Topics</div>
+      <div class="topic-pills">
+        <span class="topic-pill">Protocol Overview</span>
+        <span class="topic-pill">ArcleFXCore Contract</span>
+        <span class="topic-pill">Cross-Chain Bridge</span>
+        <span class="topic-pill">Fee Architecture</span>
+        <span class="topic-pill">Circle SDK Integration</span>
+        <span class="topic-pill">Mainnet Launch</span>
+        <span class="topic-pill">Builder Stories</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Arcle FX</span>
+    <div class="footer-links">
+      <a href="https://docs.arclefx.com/" target="_blank" rel="noopener noreferrer">Docs</a>
+      <a href="/legal?tab=terms">Terms</a>
+      <a href="/legal?tab=privacy">Privacy</a>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    /* ── Notify form — native validation + subscribed state ── */
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn     = document.getElementById('notify-btn');
+      const success = document.getElementById('notify-success');
+      e.target.reset();
+      btn.textContent = '✓ Subscribed';
+      btn.classList.add('subscribed');
+      btn.disabled = true;
+      success.classList.add('visible');
+    }
+
+    /* Scroll card into view on load */
+    document.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const el = document.querySelector('.coming-card');
+          if (!el) return;
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

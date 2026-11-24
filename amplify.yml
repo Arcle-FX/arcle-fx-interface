@@ -1,0 +1,23 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm use 20 || (nvm install 20 && nvm use 20)
+        - node --version
+        - npm ci --legacy-peer-deps
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+  customRules:
+    # SPA fallback — tüm eşleşmeyen path'ler React app'e yönlendirilir
+    - source: '<*>'
+      target: /index.html
+      status: '200'
