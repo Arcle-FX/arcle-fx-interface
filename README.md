@@ -20,8 +20,8 @@
 </p>
 
 <a href="https://arclefx.com"><strong>🚀 Live App</strong></a> &nbsp;·&nbsp;
-<a href="https://arclefx.com/docs"><strong>📖 Docs</strong></a> &nbsp;·&nbsp;
-<a href="https://arclefx.com/docs/why-arcle-fx"><strong>⚡ Why Arcle FX?</strong></a> &nbsp;·&nbsp;
+<a href="https://docs.arclefx.com"><strong>📖 Docs</strong></a> &nbsp;·&nbsp;
+<a href="https://docs.arclefx.com/why-arcle-fx"><strong>⚡ Why Arcle FX?</strong></a> &nbsp;·&nbsp;
 <a href="mailto:admin@arclefx.com"><strong>✉️ Contact</strong></a>
 
 ---
@@ -85,7 +85,7 @@
     <td><code>42161</code></td>
     <td><code>3</code></td>
     <td>✅</td>
-    <td>✅</td>
+    <td>—</td>
     <td>—</td>
     <td>✅</td>
   </tr>
@@ -150,7 +150,7 @@
 | 🔄 Swap | **0.30%** | Liquidity Provider fee |
 | 💰 Unified Balance Send | **0.10%** | Protocol fee |
 
-> Express relay fees are determined by Circle's CCTP relay and vary based on destination chain gas costs. Fees are always shown before confirmation. See [Fee Structure docs](https://arclefx.com/docs/bridge#fees) for details.
+> Express relay fees are determined by Circle's CCTP relay and vary based on destination chain gas costs. Fees are always shown before confirmation. See [Fee Structure docs](https://docs.arclefx.com/bridge#fees) for details.
 
 ---
 
@@ -182,7 +182,7 @@
 
 ## 📖 Documentation
 
-Full documentation is available at [arclefx.com/docs](https://arclefx.com/docs):
+Full documentation is available at [docs.arclefx.com](https://docs.arclefx.com):
 
 <table>
   <tr>
@@ -227,7 +227,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 <sub>
   <a href="https://arclefx.com">Live App</a> ·
-  <a href="https://arclefx.com/docs">Documentation</a> ·
+  <a href="https://docs.arclefx.com">Documentation</a> ·
   <a href="https://www.circle.com">Circle</a> ·
   <a href="mailto:admin@arclefx.com">Contact</a>
 </sub>
